@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rayhan | Portfolio</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root {
+    --sky-blue: #87CEEB;
+    --deep-blue: #0000CD;
+    --oxford-navy: #002147;
+    --pale-sky: #B0E0E6;
+    --periwinkle: #CCCCFF;
+    --amethyst-smoke: #9966CC;
+    --vintage-grape: #7A5C8C;
+    --bright-lavender: #E6E6FA;
+    --dark-amethyst: #5C3D6E;
+    --thistle: #D8BFD8;
+    --velvet-purple: #7B5B8F;
+    --platinum: #E5E4E2;
+    --bright-snow: #FFFAFA;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body{
+    background: linear-gradient(135deg, var(--bright-snow) 0%, var(--pale-sky) 100%);
+    overflow-x:hidden;
+    min-height: 100vh;
+}
+
+body.dark{
+    background: linear-gradient(135deg, var(--oxford-navy) 0%, var(--dark-amethyst) 100%);
+}
+
+.parallax-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background: url("c.png") no-repeat center center/cover;
+    transition: transform 0.1s ease-out;
+}
+
+.parallax-overlay{
+    position:fixed;
+    inset:0;
+    background:linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6));
+    z-index:-1;
+}
+
+body.dark .parallax-bg{
+    background: url("c.png") no-repeat center center/cover;
+    filter: brightness(0.6);
+}
+
+.mode-toggle {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--bright-lavender);
+    border: 3px solid var(--velvet-purple);
+    cursor: pointer;
+    z-index: 1000;
+    font-size: 20px;
+    transition: 0.3s;
+}
+.mode-toggle:hover{ transform: scale(1.1); }
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:50px;
+}
+
+.hero h1{
+    font-size: clamp(40px, 8vw, 80px);
+    color:white;
+    text-shadow: 3px 3px 10px rgba(0,0,0,0.5);
+    animation: slideInLeft 1s ease;
+}
+
+.hero p{
+    color:rgba(255,255,255,0.9);
+    font-size: clamp(18px, 3vw, 24px);
+    margin-top:20px;
+    animation: slideInLeft 1s ease 0.3s backwards;
+}
+
+.hero .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 30px;
+    animation: bounce 2s infinite;
+}
+
+.section-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 20px;
+}
+
+.card{
+    width:70%;
+    max-width:800px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+    border-radius:30px;
+    padding:40px;
+    margin: 80px 0;
+    color:white;
+    border: 2px solid var(--thistle);
+    box-shadow: 0 10px 40px rgba(123, 91, 143, 0.3);
+    opacity:0;
+    transform:translateY(100px) scale(0.9);
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card:nth-child(1){ border-color: var(--sky-blue); }
+.card:nth-child(2){ border-color: var(--periwinkle); }
+.card:nth-child(3){ border-color: var(--amethyst-smoke); }
+.card:nth-child(4){ border-color: var(--thistle); }
+.card:nth-child(5){ border-color: var(--bright-lavender); }
+
+.card.left{ transform:translateX(-150px) scale(0.9); }
+.card.show{ opacity:1; transform:translateX(0) scale(1) translateY(0); }
+
+body.dark .card{
+    background: rgba(92, 61, 110, 0.4);
+    border-color: var(--velvet-purple);
+}
+
+.card h2{
+    margin-bottom:20px;
+    font-size: 28px;
+    color: var(--oxford-navy);
+}
+body.dark .card h2{ color: var(--sky-blue); }
+
+.card li, .card p{
+    font-size: 18px;
+    line-height:1.8;
+    color: var(--oxford-navy);
+}
+body.dark .card li, body.dark .card p{ color: var(--bright-snow); }
+.card ol{ padding-left: 20px; }
+
+.social-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-box {
+    width: 90px;
+    height: 90px;
+    background: var(--bright-lavender);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 2px solid var(--periwinkle);
+}
+
+.social-box:hover{
+    transform: translateY(-10px) scale(1.1);
+    box-shadow: 0 15px 30px rgba(153, 102, 204, 0.4);
+}
+
+.social-box i{
+    font-size: 35px;
+    color: var(--dark-amethyst);
+    margin-bottom: 5px;
+}
+
+.social-box span{
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--oxford-navy);
+}
+
+/* Social Platform Colors */
+.social-box.facebook:hover{ background: #1877F2; border-color: #1877F2; }
+.social-box.facebook:hover i{ color: white; }
+.social-box.facebook:hover span{ color: white; }
+
+.social-box.instagram:hover{ background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); border-color: #bc1888; }
+.social-box.instagram:hover i{ color: white; }
+.social-box.instagram:hover span{ color: white; }
+
+.social-box.whatsapp:hover{ background: #25D366; border-color: #25D366; }
+.social-box.whatsapp:hover i{ color: white; }
+.social-box.whatsapp:hover span{ color: white; }
+
+.social-box.twitter:hover, .social-box.x:hover{ background: #000000; border-color: #000000; }
+.social-box.twitter:hover i, .social-box.x:hover i{ color: white; }
+.social-box.twitter:hover span, .social-box.x:hover span{ color: white; }
+
+.social-box.linkedin:hover{ background: #0A66C2; border-color: #0A66C2; }
+.social-box.linkedin:hover i{ color: white; }
+.social-box.linkedin:hover span{ color: white; }
+
+.social-box.reddit:hover{ background: #FF4500; border-color: #FF4500; }
+.social-box.reddit:hover i{ color: white; }
+.social-box.reddit:hover span{ color: white; }
+
+.social-box.telegram:hover{ background: #0088cc; border-color: #0088cc; }
+.social-box.telegram:hover i{ color: white; }
+.social-box.telegram:hover span{ color: white; }
+
+.social-box.github:hover{ background: #333333; border-color: #333333; }
+.social-box.github:hover i{ color: white; }
+.social-box.github:hover span{ color: white; }
+
+.social-box.pinterest:hover{ background: #E60023; border-color: #E60023; }
+.social-box.pinterest:hover i{ color: white; }
+.social-box.pinterest:hover span{ color: white; }
+
+body.dark .social-box{
+    background: var(--vintage-grape);
+    border-color: var(--thistle);
+}
+body.dark .social-box i{ color: var(--bright-snow); }
+body.dark .social-box span{ color: var(--pale-sky); }
+
+footer{
+    text-align:center;
+    padding: 40px;
+    background: var(--dark-amethyst);
+    color: var(--bright-snow);
+}
+footer p{ font-size: 16px; }
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+    40% {transform: translateX(-50%) translateY(-15px);}
+    60% {transform: translateX(-50%) translateY(-7px);}
+}
+
+::-webkit-scrollbar{ width: 10px; }
+::-webkit-scrollbar-track{ background: var(--platinum); }
+::-webkit-scrollbar-thumb{ background: var(--amethyst-smoke); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover{ background: var(--velvet-purple); }
+
+@media (max-width: 768px){
+    .card{ width:90%; padding:25px; margin: 50px 0; }
+    .card.left{ transform:translateX(-30px) scale(0.9); }
+    .hero{ padding: 30px; }
+    .mode-toggle{ top: 15px; right: 15px; }
+    .social-box{ width: 70px; height: 70px; }
+    .social-box i{ font-size: 28px; }
+    .social-box span{ font-size: 10px; }
+}
+</style>
+</head>
+<body>
+
+<div class="parallax-bg"></div>
+<div class="parallax-overlay"></div>
+
+<button class="mode-toggle" id="modeToggle">🌙</button>
+
+<section class="hero">
+    <h1>Mohammad Rayhan</h1>
+    <p>Scroll down to know more about me ↓</p>
+    <span class="scroll-hint">↓</span>
+</section>
+
+<section class="section-container">
+    <div class="card left">
+        <h2>📚 About Me</h2>
+        <ol type="A">
+            <li>Studied at Allied School & College</li>
+            <li>Studied at Dhaka Commerce College</li>
+            <li>Currently studying in Science background</li>
+        </ol>
+    </div>
+
+    <div class="card">
+        <h2>📍 From</h2>
+        <p>Keranigonj, Dhaka, Bangladesh 🇧🇩</p>
+    </div>
+
+    <div class="card left">
+        <h2>🎓 Education</h2>
+        <ol type="1">
+            <li>SSC - 2024</li>
+            <li>HSC - 2026 (Expected)</li>
+        </ol>
+    </div>
+
+    <div class="card">
+        <h2>💻 Skills</h2>
+        <ol type="1">
+            <li>PC Building & Component Selection</li>
+            <li>Network Management</li>
+            <li>Computer & Hardware Knowledge</li>
+            <li>Basic Web Development</li>
+        </ol>
+    </div>
+
+    <div class="card left">
+        <h2>🔗 Connect With Me</h2>
+        <div class="social-container">
+            <a href="https://www.facebook.com/rayhaxox" target="_blank" class="social-box facebook">
+                <i class="fab fa-facebook-f"></i>
+                <span>Facebook</span>
+            </a>
+            
+            <a href="https://instagram.com/_rayha_xo" target="_blank" class="social-box instagram">
+                <i class="fab fa-instagram"></i>
+                <span>Instagram</span>
+            </a>
+            
+            <a href="https://wa.me/8801804365834" target="_blank" class="social-box whatsapp">
+                <i class="fab fa-whatsapp"></i>
+                <span>WhatsApp</span>
+            </a>
+            
+            <a href="https://x.com/MdRayhan0180" target="_blank" class="social-box x">
+                <i class="fab fa-x-twitter"></i>
+                <span>X / Twitter</span>
+            </a>
+            
+            <a href="https://www.linkedin.com/in/rayhan-xo/" target="_blank" class="social-box linkedin">
+                <i class="fab fa-linkedin-in"></i>
+                <span>LinkedIn</span>
+            </a>
+            
+            <a href="https://reddit.com/u/__rayha__xo" target="_blank" class="social-box reddit">
+                <i class="fab fa-reddit-alien"></i>
+                <span>Reddit</span>
+            </a>
+            
+            <a href="https://t.me/@rayhaxo" target="_blank" class="social-box telegram">
+                <i class="fab fa-telegram-plane"></i>
+                <span>Telegram</span>
+            </a>
+            
+            <a href="https://github.com/rayhaxo" target="_blank" class="social-box github">
+                <i class="fab fa-github"></i>
+                <span>GitHub</span>
+            </a>
+            
+            <a href="https://pinterest.com/mohammadrayhan0180/" target="_blank" class="social-box pinterest">
+                <i class="fab fa-pinterest-p"></i>
+                <span>Pinterest</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>© 2024 Mohammad Rayhan. All Rights Reserved.</p>
+</footer>
+
+<script>
+const cards = document.querySelectorAll(".card");
+const modeToggle = document.getElementById("modeToggle");
+const parallaxBg = document.querySelector(".parallax-bg");
+
+let userToggled = false; 
+
+modeToggle.addEventListener("click", () => {
+    userToggled = true;
+    document.body.classList.toggle("dark");
+    modeToggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+});
+
+window.addEventListener("scroll", () => {
+    if (!userToggled) {
+        const currentScrollY = window.scrollY;
+        
+        if(currentScrollY > 300){
+            document.body.classList.add("dark");
+            modeToggle.textContent = "☀️";
+        } else {
+            document.body.classList.remove("dark");
+            modeToggle.textContent = "🌙";
+        }
+    }
+
+    parallaxBg.style.transform = `translateY(${window.scrollY * 0.3}px)`;
+
+    cards.forEach(card => {
+        const cardTop = card.getBoundingClientRect().top;
+        if(cardTop < window.innerHeight * 0.85){
+            card.classList.add("show");
+        }
+    });
+});
+
+window.dispatchEvent(new Event('scroll'));
+</script>
+
+</body>
+</html>
